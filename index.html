@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker Universitario | Gastos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">💰 Tracker Universitario</h1>
+            <div class="balance-container">
+                <div class="balance-card">
+                    <span class="balance-label">Balance Actual</span>
+                    <span class="balance-amount" id="current-balance">RD$ 0</span>
+                </div>
+                <div class="cash-card">
+                    <span class="cash-label">💵 Efectivo</span>
+                    <span class="cash-amount" id="cash-amount">RD$ 0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="btn-action" id="add-expense-btn">
+                <span class="btn-icon">💸</span>
+                Agregar Gasto
+            </button>
+            <button class="btn-action" id="add-income-btn">
+                <span class="btn-icon">📥</span>
+                Agregar Ingreso
+            </button>
+            <button class="btn-action" id="savings-goal-btn">
+                <span class="btn-icon">🎯</span>
+                Meta Ahorro
+            </button>
+        </div>
+
+        <!-- Main Content Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="overview">Resumen</button>
+            <button class="tab-btn" data-tab="transactions">Movimientos</button>
+            <button class="tab-btn" data-tab="savings">Ahorros</button>
+        </nav>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Gasto Semanal</span>
+                        <span class="stat-amount" id="weekly-expense">RD$ 0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Ahorrado</span>
+                        <span class="stat-amount" id="total-saved">RD$ 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="categories-section">
+                <h3 class="section-title">📈 Gastos por Categoría</h3>
+                <div class="categories-grid" id="categories-grid">
+                    <!-- Categories will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="recommendations-card">
+                <h3 class="section-title">💡 Recomendaciones</h3>
+                <div class="recommendations-list" id="recommendations-list">
+                    <!-- Recommendations will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div id="transactions" class="tab-content">
+            <div class="transactions-header">
+                <h3 class="section-title">📋 Historial de Movimientos</h3>
+                <div class="filters">
+                    <select id="category-filter" class="filter-select">
+                        <option value="all">Todas las categorías</option>
+                        <option value="food">🍔 Comida</option>
+                        <option value="university">📚 Universidad</option>
+                        <option value="cleaning">🧴 Detergentes</option>
+                        <option value="transport">🚌 Transporte</option>
+                        <option value="unnecessary">🛍️ No Necesarios</option>
+                    </select>
+                </div>
+            </div>
+            <div class="transactions-list" id="transactions-list">
+                <!-- Transactions will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Savings Tab -->
+        <div id="savings" class="tab-content">
+            <div class="savings-header">
+                <h3 class="section-title">💰 Mis Ahorros</h3>
+                <button class="btn-savings" id="add-savings-btn">+ Agregar Ahorro</button>
+            </div>
+            <div class="savings-stats">
+                <div class="savings-card">
+                    <span class="savings-label">Total Ahorrado</span>
+                    <span class="savings-amount" id="savings-total">RD$ 0</span>
+                </div>
+            </div>
+            <div class="savings-goal-card" id="savings-goal-card">
+                <h4>🎯 Meta de Ahorro</h4>
+                <div class="goal-info" id="goal-info">
+                    <p>No hay una meta activa</p>
+                </div>
+                <div class="goal-progress" id="goal-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0% completado</span>
+                </div>
+            </div>
+            <div class="savings-history">
+                <h4>📋 Historial de Ahorros</h4>
+                <div class="savings-list" id="savings-list">
+                    <!-- Savings history will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Expense Modal -->
+    <div id="expense-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title">💸 Agregar Gasto</h2>
+            <form id="expense-form" class="modal-form">
+                <div class="form-group">
+                    <label for="expense-amount">Monto (RD$)</label>
+                    <input type="number" id="expense-amount" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="expense-category">Categoría</label>
+                    <select id="expense-category" required>
+                        <option value="food">🍔 Comida</option>
+                        <option value="university">📚 Universidad</option>
+                        <option value="cleaning">🧴 Detergentes</option>
+                        <option value="transport">🚌 Transporte</option>
+                        <option value="unnecessary">🛍️ No Necesarios</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expense-payment">Método de Pago</label>
+                    <select id="expense-payment" required>
+                        <option value="cash">💵 Efectivo</option>
+                        <option value="card">💳 Tarjeta</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expense-description">Descripción (opcional)</label>
+                    <input type="text" id="expense-description" placeholder="Ej: Almuerzo en la universidad">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Agregar Gasto</button>
+                    <button type="button" class="btn-secondary" id="cancel-expense">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Income Modal -->
+    <div id="income-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title">📥 Agregar Ingreso</h2>
+            <form id="income-form" class="modal-form">
+                <div class="form-group">
+                    <label for="income-amount">Monto (RD$)</label>
+                    <input type="number" id="income-amount" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="income-source">Fuente</label>
+                    <select id="income-source" required>
+                        <option value="family">👪 Familia</option>
+                        <option value="work">💼 Trabajo</option>
+                        <option value="scholarship">🎓 Beca</option>
+                        <option value="other">✨ Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="income-description">Descripción (opcional)</label>
+                    <input type="text" id="income-description" placeholder="Ej: Pago de trabajo part-time">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Agregar Ingreso</button>
+                    <button type="button" class="btn-secondary" id="cancel-income">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Savings Goal Modal -->
+    <div id="savings-goal-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title">🎯 Nueva Meta de Ahorro</h2>
+            <form id="savings-goal-form" class="modal-form">
+                <div class="form-group">
+                    <label for="goal-amount">Monto a ahorrar (RD$)</label>
+                    <input type="number" id="goal-amount" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="goal-days">En cuántos días</label>
+                    <input type="number" id="goal-days" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="goal-description">Descripción de la meta</label>
+                    <input type="text" id="goal-description" placeholder="Ej: Ahorrar para nuevo laptop" required>
+                </div>
+                <div class="goal-preview">
+                    <p id="daily-saving-amount">Debes ahorrar: <strong>RD$ 0</strong> por día</p>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Establecer Meta</button>
+                    <button type="button" class="btn-secondary" id="cancel-goal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Savings Modal -->
+    <div id="add-savings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title">💰 Agregar a Ahorros</h2>
+            <form id="add-savings-form" class="modal-form">
+                <div class="form-group">
+                    <label for="savings-amount">Monto a ahorrar (RD$)</label>
+                    <input type="number" id="savings-amount" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="savings-description">Descripción (opcional)</label>
+                    <input type="text" id="savings-description" placeholder="Ej: Ahorro semanal">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Agregar a Ahorros</button>
+                    <button type="button" class="btn-secondary" id="cancel-savings">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
