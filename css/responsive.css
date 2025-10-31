@@ -1,0 +1,151 @@
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .logo {
+        font-size: 2.2em;
+    }
+
+    .balance-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .balance-card, .cash-card {
+        min-width: 250px;
+        padding: 20px 25px;
+    }
+
+    .balance-amount, .cash-amount {
+        font-size: 1.8em;
+    }
+
+    .quick-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-action {
+        justify-content: center;
+        padding: 18px 25px;
+    }
+
+    .nav-tabs {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .tab-btn {
+        padding: 15px 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2em;
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .transactions-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .savings-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-savings {
+        width: 100%;
+        text-align: center;
+    }
+
+    .modal-content {
+        margin: 10% auto;
+        padding: 30px 25px;
+        width: 95%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.8em;
+    }
+
+    .header {
+        padding: 20px 15px;
+    }
+
+    .balance-card, .cash-card {
+        min-width: 100%;
+        padding: 15px 20px;
+    }
+
+    .balance-amount, .cash-amount {
+        font-size: 1.6em;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+    }
+
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .category-card {
+        padding: 20px;
+    }
+
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .transaction-amount {
+        align-self: flex-end;
+    }
+
+    .savings-card {
+        padding: 20px;
+    }
+
+    .savings-amount {
+        font-size: 2em;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+    
